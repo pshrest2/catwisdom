@@ -1,11 +1,15 @@
 import * as React from "react";
 
-type EmailTemplateProps = {
-  firstName: string;
+type Props = {
+  wisdom: string;
 };
 
-export const EmailTemplate = ({ firstName }: EmailTemplateProps) => (
-  <div>
-    <h1>Welcome, {firstName}!</h1>
-  </div>
-);
+export function EmailTemplate({ wisdom }: Props) {
+  return (
+    <div className="max-w-md mx-auto p-6 text-left">
+      <h1 className="text-2xl font-semibold mb-4">Wisdom of the day! 🐱✨</h1>
+      <p className="p-4 mb-4">{wisdom}</p>
+      <p>Have a purrfect day 😽</p>
+    </div>
+  );
+}

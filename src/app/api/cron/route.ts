@@ -1,0 +1,44 @@
+import { Resend } from "resend";
+import { EmailTemplate } from "@/app/components/email-template";
+import { getSubscribers } from "@/app/lib/actions";
+import { genWisdom } from "@/app/lib/wisdom";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function GET(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return new Response("Unauthorized", {
+        status: 401,
+      });
+    }
+
+    const wisdom = await genWisdom();
+    const subscribers = await getSubscribers();
+
+    const result: Record<number, { data: any; error: any }> = {};
+    await Promise.all(
+      subscribers.map(async (subscriber) => {
+        const { data, error } = await sendEmail({
+          email: subscriber.email,
+          wisdom: wisdom,
+        });
+        result[subscriber.id] = { data, error };
+      })
+    );
+    // TODO: add retry here if failed to send email
+    return Response.json({ result });
+  } catch (error) {
+    return Response.json({ error }, { status: 500 });
+  }
+}
+
+async function sendEmail({ email, wisdom }: { email: string; wisdom: string }) {
+  return await resend.emails.send({
+    from: "Wise Cat <catwisdom@raspisurveillance.com>",
+    to: [email],
+    subject: "Meow! Your Daily Wisdom Is Here",
+    react: EmailTemplate({ wisdom }),
+  });
+}

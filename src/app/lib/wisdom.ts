@@ -1,5 +1,5 @@
 import { Groq } from "groq-sdk";
-import { createWisdom, getLatestWisdom } from "./actions";
+import { createWisdom, getLatestWisdom } from "@/app/lib/actions";
 
 const LLM_MODEL = process.env.LLM_MODEL || "llama-3.3-70b-versatile";
 const PROMPT = `
