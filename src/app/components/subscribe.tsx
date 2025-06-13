@@ -37,7 +37,7 @@ export default function SubscriptionForm(props: SubscriptionFormProps) {
     <>
       <form
         {...props}
-        className={`flex gap-4 sm:items-center flex-col sm:flex-row w-full ${props.className}`}
+        className={`flex gap-4 xs:items-center flex-col xs:flex-row w-full ${props.className}`}
         onSubmit={handleSubmit}
       >
         <input
