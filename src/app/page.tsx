@@ -13,7 +13,7 @@ export default async function Home() {
           Wisdom of the day -{" "}
           <span className="text-sm italic font-normal">{genWisdom()}</span>
         </span>
-        <SubscriptionForm className="px-6" />
+        <SubscriptionForm className="px-6" mode="subscribe" />
       </main>
     </div>
   );

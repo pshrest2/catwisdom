@@ -15,6 +15,11 @@ interface Wisdom {
 
 const DATABASE_URL = process.env.DATABASE_URL!;
 
+export interface FormState {
+  success: boolean;
+  error: string;
+}
+
 /**
  * Users
  */
@@ -23,13 +28,39 @@ export async function getSubscribers() {
   return await sql<User[]>`SELECT * FROM users`;
 }
 
-export async function subscribe(email: string) {
-  const sql = postgres(DATABASE_URL, { ssl: "require" });
-  const userResult = await sql<
-    User[]
-  >`SELECT * FROM users u WHERE u.email = ${email}`;
-  if (userResult.length === 0) {
-    await sql`INSERT INTO users (email) VALUES (${email})`;
+export async function subscribe(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const email = formData.get("email") as string;
+
+  try {
+    const sql = postgres(DATABASE_URL);
+    const userResult = await sql<
+      User[]
+    >`SELECT * FROM users u WHERE u.email = ${email} LIMIT 1`;
+    if (userResult.length === 0) {
+      await sql`INSERT INTO users (email) VALUES (${email})`;
+    }
+    return { success: true, error: "" };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function unsubscribe(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const email = formData.get("email") as string;
+
+  try {
+    const sql = postgres(DATABASE_URL);
+    const result =
+      await sql`DELETE FROM users u WHERE u.email = ${email} RETURNING u.id`;
+    return { success: result.length > 0, error: "" };
+  } catch (error) {
+    return { success: false, error: (error as Error).message };
   }
 }
 
