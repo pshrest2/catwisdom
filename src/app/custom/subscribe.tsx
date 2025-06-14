@@ -56,10 +56,13 @@ export default function SubscriptionForm(props: SubscriptionFormProps) {
           Subscribe
         </Button>
       </form>
-      <div className="mt-2">
+      <div className="mt-2 px-6">
+        <p className="text-xs text-muted-foreground mt-2">
+          By subscribing, you agree to receive daily wisdom email.
+        </p>
         {error && <p className="text-red-400 mb-2">{error}</p>}
         {success && (
-          <p className="text-green-400">You’re successfully subscribed! 🥳</p>
+          <p className="text-green-400">You're successfully subscribed! 🥳</p>
         )}
       </div>
     </>
