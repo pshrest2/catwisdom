@@ -1,5 +1,5 @@
 import { Resend } from "resend";
-import { EmailTemplate } from "@/app/components/email-template";
+import { EmailTemplate } from "@/app/custom/email-template";
 import { getSubscribers } from "@/app/lib/actions";
 import { genWisdom } from "@/app/lib/wisdom";
 

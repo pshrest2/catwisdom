@@ -1,5 +1,5 @@
-import SubscriptionForm from "@/app/components/subscribe";
-import { genWisdom } from "./lib/wisdom";
+import SubscriptionForm from "@/app/custom/subscribe";
+import { genWisdom } from "@/app/lib/wisdom";
 
 export default async function Home() {
   return (
