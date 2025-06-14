@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased p-8 min-h-screen flex flex-col`}
       >
         <ThemeProvider
           attribute="class"
@@ -38,8 +38,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <main className="flex-grow">{children}</main>
         </ThemeProvider>
+        <footer className="mt-auto py-4 text-center text-sm text-gray-500 border-t">
+          © {new Date().getFullYear()} Cat Wisdom. Made with love by your
+          master. All rights reserved.
+        </footer>
       </body>
     </html>
   );

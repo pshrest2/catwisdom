@@ -3,7 +3,7 @@ import { genWisdom } from "@/app/lib/wisdom";
 
 export default async function Home() {
   return (
-    <div className="flex flex-col items-center min-h-screen p-8">
+    <div className="flex flex-col items-center">
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
           Cat Wisdom 🐱
