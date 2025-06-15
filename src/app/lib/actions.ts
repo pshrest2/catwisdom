@@ -75,6 +75,14 @@ export async function getLatestWisdom() {
   return wisdom[0];
 }
 
+export async function getWisdoms() {
+  const sql = postgres(DATABASE_URL);
+  const wisdoms = await sql<
+    Wisdom[]
+  >`SELECT * FROM wisdom w ORDER BY w.id DESC LIMIT 10`;
+  return wisdoms;
+}
+
 export async function createWisdom(content: string) {
   const sql = postgres(DATABASE_URL);
   await sql`INSERT INTO wisdom (content) VALUES (${content})`;
