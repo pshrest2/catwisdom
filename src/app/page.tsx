@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default async function Home() {
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-4">
       <div className="xs:absolute xs:top-6 xs:right-6">
         <ModeToggle />
       </div>
