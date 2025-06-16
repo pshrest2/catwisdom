@@ -2,11 +2,13 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
+import { AlertCircleIcon, CheckCircle2Icon } from "lucide-react";
 import { faCat } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { subscribe, unsubscribe, FormState } from "@/app/lib/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface SubscriptionMode {
   mode: "subscribe" | "unsubscribe";
@@ -30,7 +32,10 @@ export default function SubscriptionForm({
   mode = "subscribe",
   ...props
 }: SubscriptionFormProps) {
-  const initialState: FormState = { success: false, error: "" };
+  const initialState: FormState = {
+    success: false,
+    error: "",
+  };
   const [state, formAction] = useActionState(
     mode === "subscribe" ? subscribe : unsubscribe,
     initialState
@@ -57,15 +62,26 @@ export default function SubscriptionForm({
             ? "By subscribing, you agree to receive daily wisdom email."
             : "By unsubscribing, you will no longer receive daily wisdom email."}
         </p>
-        {state.error && <p className="text-red-400 mb-2">{state.error}</p>}
-        {state.success && (
-          <p className="text-green-400">
-            {mode === "subscribe"
-              ? "You're successfully subscribed! 🥳"
-              : "You've unsubscribed successfully! 😿"}
-          </p>
-        )}
       </div>
+      {state.error && (
+        <Alert variant="destructive">
+          <AlertCircleIcon />
+          <AlertTitle>Opps, we encountered an issue</AlertTitle>
+          <AlertDescription>
+            <p>{state.error}. Please try again later.</p>
+          </AlertDescription>
+        </Alert>
+      )}
+      {state.success && (
+        <Alert>
+          <CheckCircle2Icon />
+          <AlertTitle>Success</AlertTitle>
+          <AlertDescription>
+            You have successfully{" "}
+            {mode === "subscribe" ? "subscribed 🥳" : "unsubscribed."}
+          </AlertDescription>
+        </Alert>
+      )}
     </>
   );
 }
