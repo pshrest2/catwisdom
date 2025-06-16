@@ -1,8 +1,15 @@
+import Link from "next/link";
 import SubscriptionForm from "@/app/custom/subscribe";
 
 export default async function Unsubscribe() {
   return (
     <div className="flex flex-col items-center">
+      <Link
+        href="/"
+        className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        ← Changed your mind? Go back home
+      </Link>
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
           Don't Leave 😿
