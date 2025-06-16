@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ThemeProvider } from "@/components/theme-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
 
@@ -38,7 +39,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="flex-grow">{children}</main>
+          <main className="flex-grow">
+            {children}
+            <SpeedInsights />
+          </main>
         </ThemeProvider>
         <footer className="mt-auto py-4 text-center text-sm text-gray-500 border-t">
           © {new Date().getFullYear()} Cat Wisdom. Made with love by your
