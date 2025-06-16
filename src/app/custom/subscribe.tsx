@@ -28,7 +28,7 @@ function SubmitButton({ mode }: SubscriptionMode) {
   );
 }
 
-export default function SubscriptionForm({
+export function SubscriptionForm({
   mode = "subscribe",
   ...props
 }: SubscriptionFormProps) {

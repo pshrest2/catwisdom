@@ -1,6 +1,8 @@
-import SubscriptionForm from "@/app/custom/subscribe";
+import Image from "next/image";
 import { genWisdom } from "@/app/lib/wisdom";
+import { SubscriptionForm } from "@/app/custom/subscribe";
 import { ModeToggle } from "@/app/custom/mode-toggle";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default async function Home() {
   return (
@@ -13,10 +15,25 @@ export default async function Home() {
           Cat Wisdom 🐱
         </div>
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
-        <span className="text-sm font-bold px-6 py-4">
-          Wisdom of the day -{" "}
-          <span className="text-sm italic font-normal">{genWisdom()}</span>
-        </span>
+        <Card className="w-full">
+          <CardHeader className="flex items-center">
+            <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 mx-auto">
+              <Image
+                src="/images/wise-cat.jpg"
+                alt="Wise cat sharing wisdom"
+                className="object-cover"
+                priority
+                fill
+              />
+            </div>
+          </CardHeader>
+          <CardContent className="text-center">
+            <span className="text-sm font-bold">
+              Wisdom of the day -{" "}
+              <span className="text-sm italic font-normal">{genWisdom()}</span>
+            </span>
+          </CardContent>
+        </Card>
         <SubscriptionForm className="px-6" mode="subscribe" />
       </main>
     </div>
