@@ -19,7 +19,7 @@ export default async function Home() {
           <CardHeader className="flex items-center">
             <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 mx-auto">
               <Image
-                src="/images/wise-cat.jpg"
+                src="/images/wise-cat.png"
                 alt="Wise cat sharing wisdom"
                 className="object-cover"
                 priority
