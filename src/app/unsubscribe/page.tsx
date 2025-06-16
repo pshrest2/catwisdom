@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SubscriptionForm from "@/app/custom/subscribe";
+import { SubscriptionForm } from "@/app/custom/subscribe";
 
 export default async function Unsubscribe() {
   return (
