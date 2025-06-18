@@ -5,11 +5,11 @@ interface SearchParams {
   email?: string;
 }
 
-interface Props {
-  searchParams: SearchParams;
-}
-
-export default async function Unsubscribe({ searchParams }: Props) {
+export default async function Unsubscribe({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
   const { email } = await searchParams;
 
   return (
