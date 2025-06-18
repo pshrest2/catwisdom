@@ -3,6 +3,7 @@ import { genWisdom } from "@/app/lib/wisdom";
 import { SubscriptionForm } from "@/app/custom/subscribe";
 import { ModeToggle } from "@/app/custom/mode-toggle";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default async function Home() {
   return (
@@ -17,15 +18,13 @@ export default async function Home() {
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
         <Card className="w-full">
           <CardHeader className="flex items-center">
-            <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 mx-auto">
-              <Image
+            <Avatar className="relative size-32 mx-auto">
+              <AvatarImage
                 src="/images/wise-cat.png"
-                alt="Wise cat sharing wisdom"
                 className="object-cover"
-                priority
-                fill
               />
-            </div>
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
           </CardHeader>
           <CardContent className="text-center">
             <span className="text-sm font-bold">

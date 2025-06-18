@@ -44,7 +44,7 @@ export default function RootLayout({
             <SpeedInsights />
           </main>
         </ThemeProvider>
-        <footer className="mt-auto py-4 text-center text-sm text-gray-500 border-t">
+        <footer className="mt-10 py-4 text-center text-sm text-gray-500 border-t">
           © {new Date().getFullYear()} Cat Wisdom. Made with love by your
           master. All rights reserved.{" "}
           <a href="/unsubscribe" className="underline">
