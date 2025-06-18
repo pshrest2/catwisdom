@@ -25,11 +25,7 @@ export default async function Unsubscribe({
           Don't Leave 😿
         </div>
         <div className="sm:text-2xl">We are sorry to see you go</div>
-        <SubscriptionForm
-          className="px-6"
-          mode="unsubscribe"
-          initialEmail={email}
-        />
+        <SubscriptionForm mode="unsubscribe" initialEmail={email} />
       </main>
     </div>
   );

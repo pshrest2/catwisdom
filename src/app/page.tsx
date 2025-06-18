@@ -34,7 +34,7 @@ export default async function Home() {
             </span>
           </CardContent>
         </Card>
-        <SubscriptionForm className="px-6" mode="subscribe" />
+        <SubscriptionForm mode="subscribe" />
       </main>
     </div>
   );
