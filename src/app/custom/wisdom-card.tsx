@@ -33,9 +33,6 @@ export function WisdomCard({ avatarSrc, children }: Props) {
         </CardHeader>
       )}
       <CardContent className="text-center">{children}</CardContent>
-      <CardFooter>
-        <LikeButton likes={likes} onClick={likeWisdom} />
-      </CardFooter>
     </Card>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Heart } from "lucide-react";
+import { getReadableLikesCount } from "@/app/lib/utils";
 
 interface Props {
   likes: number;
@@ -41,7 +42,9 @@ export function LikeButton({ likes, onClick, ...props }: Props) {
           (liked ? "fill-red-500 text-red-500" : "fill-none text-foreground")
         }
       />
-      <span className="text-sm px-1 font-bold">{likes}</span>
+      <span className="text-sm px-1 font-bold">
+        {getReadableLikesCount(likes)}
+      </span>
     </button>
   );
 }
