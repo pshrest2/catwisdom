@@ -10,6 +10,8 @@ interface Props {
 }
 
 export default async function Unsubscribe({ searchParams }: Props) {
+  const { email } = await searchParams;
+
   return (
     <div className="flex flex-col items-center">
       <Link
@@ -26,7 +28,7 @@ export default async function Unsubscribe({ searchParams }: Props) {
         <SubscriptionForm
           className="px-6"
           mode="unsubscribe"
-          initialEmail={searchParams.email}
+          initialEmail={email}
         />
       </main>
     </div>

@@ -27,10 +27,6 @@ export function EmailTemplate({ wisdom, email }: Props) {
         <h1>Cat Wisdom</h1>
       </div>
 
-      <p>Hello,</p>
-
-      <b>Your daily dose of cat wisdom is ready ✨</b>
-
       <p
         style={{
           marginBottom: "16px",
@@ -38,6 +34,9 @@ export function EmailTemplate({ wisdom, email }: Props) {
           lineHeight: "1.5",
         }}
       >
+        <p>Hello,</p>
+
+        <p>Your daily dose of cat wisdom is ready ✨</p>
         {wisdom}
       </p>
       <p style={{ marginBottom: "32px", fontSize: "16px" }}>
@@ -53,9 +52,9 @@ export function EmailTemplate({ wisdom, email }: Props) {
       >
         <p style={{ margin: "0" }}>
           © {new Date().getFullYear()} Cat Wisdom. Made with love by your
-          master.
+          master.{" "}
           <a
-            href={`${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?${email}`}
+            href={`${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?email=${encodeURIComponent(email)}`}
             style={{
               color: "#0070f3",
               textDecoration: "underline",
