@@ -4,17 +4,16 @@ import { getReadableLikesCount } from "@/app/lib/utils";
 
 interface Props {
   likes: number;
+  value: boolean;
   onClick: (liked: boolean) => void;
 }
 
-export function LikeButton({ likes, onClick, ...props }: Props) {
-  const [liked, setLiked] = useState(false);
+export function LikeButton({ likes, value, onClick, ...props }: Props) {
   const [animating, setAnimating] = useState(false);
 
   const handleClick = () => {
-    const newLiked = !liked;
+    const newLiked = !value;
     onClick(newLiked);
-    setLiked(newLiked);
     setAnimating(true);
   };
 
@@ -27,7 +26,7 @@ export function LikeButton({ likes, onClick, ...props }: Props) {
 
   return (
     <button
-      aria-label={liked ? "Unlike" : "Like"}
+      aria-label={value ? "Unlike" : "Like"}
       onClick={handleClick}
       className={
         `bg-transparent border-none p-0 cursor-pointer outline-none inline-flex items-center justify-center ` +
@@ -39,7 +38,7 @@ export function LikeButton({ likes, onClick, ...props }: Props) {
         size={28}
         className={
           `transition-colors duration-200 drop-shadow-sm ` +
-          (liked ? "fill-red-500 text-red-500" : "fill-none text-foreground")
+          (value ? "fill-red-500 text-red-500" : "fill-none text-foreground")
         }
       />
       <span className="text-sm px-1 font-bold">

@@ -14,7 +14,11 @@ export async function genWisdom() {
     lastWisdom.created_at.getMonth() === today.getMonth() &&
     lastWisdom.created_at.getDate() === today.getDate()
   ) {
-    return lastWisdom.content;
+    return {
+      id: lastWisdom.id,
+      wisdom: lastWisdom.content,
+      likes: lastWisdom.likes,
+    };
   }
 
   // Retrieve all past wisdom messages to avoid repeating
@@ -48,7 +52,7 @@ export async function genWisdom() {
   }
 
   // Store in the database
-  await createWisdom(message);
+  const result = await createWisdom(message);
 
-  return message;
+  return { id: result.id, wisdom: message, likes: 0 };
 }

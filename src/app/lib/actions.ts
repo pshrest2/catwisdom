@@ -2,14 +2,18 @@
 
 import postgres from "postgres";
 
-interface User {
+interface NumericId {
+  id: number;
+}
+
+interface User extends NumericId {
   id: number;
   email: string;
 }
 
-interface Wisdom {
-  id: number;
+interface Wisdom extends NumericId {
   content: string;
+  likes: number;
   created_at: Date;
 }
 
@@ -86,5 +90,24 @@ export async function getWisdoms() {
 
 export async function createWisdom(content: string) {
   const sql = postgres(DATABASE_URL);
-  await sql`INSERT INTO wisdom (content) VALUES (${content})`;
+  const res = await sql<
+    NumericId[]
+  >`INSERT INTO wisdom (content) VALUES (${content}) RETURNING id`;
+  return res[0];
+}
+
+export async function likeWisdom(id: number) {
+  const sql = postgres(DATABASE_URL);
+  const res = await sql<
+    NumericId[]
+  >`UPDATE wisdom SET likes = likes + 1 WHERE id = ${id}`;
+  return res[0];
+}
+
+export async function unlikeWisdom(id: number) {
+  const sql = postgres(DATABASE_URL);
+  const res = await sql<
+    NumericId[]
+  >`UPDATE wisdom SET likes = GREATEST(likes - 1, 0) WHERE id = ${id}`;
+  return res[0];
 }
