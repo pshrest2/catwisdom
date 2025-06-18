@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { SubscriptionForm } from "@/app/custom/subscribe";
 
-export default async function Unsubscribe() {
+interface SearchParams {
+  email?: string;
+}
+
+interface Props {
+  searchParams: SearchParams;
+}
+
+export default async function Unsubscribe({ searchParams }: Props) {
   return (
     <div className="flex flex-col items-center">
       <Link
@@ -15,7 +23,11 @@ export default async function Unsubscribe() {
           Don't Leave 😿
         </div>
         <div className="sm:text-2xl">We are sorry to see you go</div>
-        <SubscriptionForm className="px-6" mode="unsubscribe" />
+        <SubscriptionForm
+          className="px-6"
+          mode="unsubscribe"
+          initialEmail={searchParams.email}
+        />
       </main>
     </div>
   );

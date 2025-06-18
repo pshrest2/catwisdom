@@ -15,7 +15,9 @@ interface SubscriptionMode {
 }
 
 type SubscriptionFormProps = React.FormHTMLAttributes<HTMLFormElement> &
-  SubscriptionMode;
+  SubscriptionMode & {
+    initialEmail?: string;
+  };
 
 function SubmitButton({ mode }: SubscriptionMode) {
   const { pending } = useFormStatus();
@@ -30,6 +32,7 @@ function SubmitButton({ mode }: SubscriptionMode) {
 
 export function SubscriptionForm({
   mode = "subscribe",
+  initialEmail,
   ...props
 }: SubscriptionFormProps) {
   const initialState: FormState = {
@@ -52,6 +55,7 @@ export function SubscriptionForm({
           name="email"
           type="email"
           placeholder="master@catwisdom.purr"
+          defaultValue={initialEmail}
           required
         />
         <SubmitButton mode={mode} />
@@ -68,7 +72,7 @@ export function SubscriptionForm({
           <AlertCircleIcon />
           <AlertTitle>Opps, we encountered an issue</AlertTitle>
           <AlertDescription>
-            <p>{state.error}. Please try again later.</p>
+            <p>{state.error}.</p>
           </AlertDescription>
         </Alert>
       )}

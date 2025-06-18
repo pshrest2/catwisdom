@@ -58,7 +58,8 @@ export async function unsubscribe(
     const sql = postgres(DATABASE_URL);
     const result =
       await sql`DELETE FROM users u WHERE u.email = ${email} RETURNING u.id`;
-    return { success: result.length > 0, error: "" };
+    if (result.length > 0) return { success: true, error: "" };
+    return { success: false, error: "You are not a subscribed human" };
   } catch (error) {
     return { success: false, error: (error as Error).message };
   }

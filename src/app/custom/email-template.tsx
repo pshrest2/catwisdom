@@ -2,14 +2,69 @@ import * as React from "react";
 
 type Props = {
   wisdom: string;
+  email: string;
 };
 
-export function EmailTemplate({ wisdom }: Props) {
+export function EmailTemplate({ wisdom, email }: Props) {
   return (
-    <div className="max-w-md mx-auto p-6 text-left">
-      <h1 className="text-2xl font-semibold mb-4">Wisdom of the day! 🐱✨</h1>
-      <p className="p-4 mb-4">{wisdom}</p>
-      <p>Have a purrfect day 😽</p>
+    <div
+      style={{
+        maxWidth: "500px",
+        textAlign: "left",
+      }}
+    >
+      <div style={{ marginBottom: "24px" }}>
+        <a href={process.env.NEXT_PUBLIC_APP_URL} style={{ display: "flex" }}>
+          <img
+            src={`${process.env.NEXT_PUBLIC_APP_URL}/images/logo.png`}
+            alt="Cat Wisdom Logo"
+            style={{
+              width: "60px",
+              height: "60px",
+            }}
+          />
+        </a>
+        <h1>Cat Wisdom</h1>
+      </div>
+
+      <p>Hello,</p>
+
+      <b>Your daily dose of cat wisdom is ready ✨</b>
+
+      <p
+        style={{
+          marginBottom: "16px",
+          fontSize: "16px",
+          lineHeight: "1.5",
+        }}
+      >
+        {wisdom}
+      </p>
+      <p style={{ marginBottom: "32px", fontSize: "16px" }}>
+        Have a purrfect day 😽
+      </p>
+      <footer
+        style={{
+          fontSize: "14px",
+          color: "#666666",
+          borderTop: "1px solid #e5e5e5",
+          paddingTop: "16px",
+        }}
+      >
+        <p style={{ margin: "0" }}>
+          © {new Date().getFullYear()} Cat Wisdom. Made with love by your
+          master.
+          <a
+            href={`${process.env.NEXT_PUBLIC_APP_URL}/unsubscribe?${email}`}
+            style={{
+              color: "#0070f3",
+              textDecoration: "underline",
+            }}
+          >
+            Unsubscribe
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

@@ -39,6 +39,6 @@ async function sendEmail({ email, wisdom }: { email: string; wisdom: string }) {
     from: "Wise Cat <catwisdom@raspisurveillance.com>",
     to: [email],
     subject: "Meow! Your Daily Wisdom Is Here",
-    react: EmailTemplate({ wisdom }),
+    react: EmailTemplate({ wisdom, email }),
   });
 }

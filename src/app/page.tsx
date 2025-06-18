@@ -12,7 +12,7 @@ export default async function Home() {
       </div>
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
-          Cat Wisdom 🐱
+          Cat Wisdom 😽
         </div>
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
         <Card className="w-full">
