@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { genWisdom } from "@/app/lib/wisdom";
 import { SubscriptionForm } from "@/app/custom/subscribe";
 import { ModeToggle } from "@/app/custom/mode-toggle";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { WisdomCard } from "@/app/custom/wisdom-card";
 
 export default async function Home() {
   return (
@@ -16,23 +14,12 @@ export default async function Home() {
           Cat Wisdom 😽
         </div>
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
-        <Card className="w-full">
-          <CardHeader className="flex items-center">
-            <Avatar className="relative size-32 mx-auto">
-              <AvatarImage
-                src="/images/wise-cat.png"
-                className="object-cover"
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </CardHeader>
-          <CardContent className="text-center">
-            <span className="text-sm font-bold">
-              Wisdom of the day -{" "}
-              <span className="text-sm italic font-normal">{genWisdom()}</span>
-            </span>
-          </CardContent>
-        </Card>
+        <WisdomCard avatarSrc="/images/wise-cat.png">
+          <span className="text-sm font-bold">
+            Wisdom of the day -{" "}
+            <span className="text-sm italic font-normal">{genWisdom()}</span>
+          </span>
+        </WisdomCard>
         <SubscriptionForm mode="subscribe" />
       </main>
     </div>
