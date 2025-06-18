@@ -23,11 +23,11 @@ export function EmailTemplate({ wisdom, email }: Props) {
               height: "60px",
             }}
           />
+          <h1>Cat Wisdom</h1>
         </a>
-        <h1>Cat Wisdom</h1>
       </div>
 
-      <p
+      <div
         style={{
           marginBottom: "16px",
           fontSize: "16px",
@@ -35,10 +35,9 @@ export function EmailTemplate({ wisdom, email }: Props) {
         }}
       >
         <p>Hello,</p>
-
         <p>Your daily dose of cat wisdom is ready ✨</p>
         {wisdom}
-      </p>
+      </div>
       <p style={{ marginBottom: "32px", fontSize: "16px" }}>
         Have a purrfect day 😽
       </p>
