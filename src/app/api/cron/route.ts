@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       subscribers.map(async (subscriber) => {
         const { data, error } = await sendEmail({
           email: subscriber.email,
-          wisdom: wisdom,
+          wisdom: wisdom.wisdom,
         });
         result[subscriber.id] = { data, error };
       })
