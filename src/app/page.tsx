@@ -5,7 +5,6 @@ import { WisdomCard } from "@/app/custom/wisdom-card";
 
 export default async function Home() {
   const { id, wisdom, likes } = await genWisdom();
-  console.log(`Fetched wisdom ${id} with ${likes} likes.`);
   return (
     <div className="flex flex-col items-center mb-4">
       <div className="xs:absolute xs:top-6 xs:right-6">

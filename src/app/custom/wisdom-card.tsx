@@ -69,6 +69,7 @@ export function WisdomCard({
     const likedIds = getLikedIds();
     setLiked(likedIds.includes(wisdomId));
     setLikes(totalLikes);
+    console.log(`Fetched wisdom ${wisdomId} with ${totalLikes} likes.`);
   }, [wisdomId, totalLikes]);
 
   return (
