@@ -98,16 +98,10 @@ export async function createWisdom(content: string) {
 
 export async function likeWisdom(id: number) {
   const sql = postgres(DATABASE_URL);
-  const res = await sql<
-    NumericId[]
-  >`UPDATE wisdom SET likes = likes + 1 WHERE id = ${id}`;
-  return res[0];
+  await sql`UPDATE wisdom SET likes = likes + 1 WHERE id = ${id}`;
 }
 
 export async function unlikeWisdom(id: number) {
   const sql = postgres(DATABASE_URL);
-  const res = await sql<
-    NumericId[]
-  >`UPDATE wisdom SET likes = GREATEST(likes - 1, 0) WHERE id = ${id}`;
-  return res[0];
+  await sql`UPDATE wisdom SET likes = GREATEST(likes - 1, 0) WHERE id = ${id}`;
 }

@@ -52,14 +52,14 @@ export function WisdomCard({
     try {
       // perform optimistic updates
       setLiked(liked);
-      setLikes((prev) => prev + newLikes);
+      setLikes((prev) => Math.max(prev + newLikes, 0));
       if (liked) await likeWisdom(wisdomId);
       else await unlikeWisdom(wisdomId);
       updateLikedIds(wisdomId, liked);
     } catch (error) {
       // revert optimistic updates
       setLiked(!liked);
-      setLikes((prev) => prev - newLikes);
+      setLikes((prev) => Math.max(prev - newLikes, 0));
 
       // TODO: show error
     }
@@ -68,7 +68,8 @@ export function WisdomCard({
   useEffect(() => {
     const likedIds = getLikedIds();
     setLiked(likedIds.includes(wisdomId));
-  }, [wisdomId]);
+    setLikes(totalLikes);
+  }, [wisdomId, totalLikes]);
 
   return (
     <Card className="w-full">
