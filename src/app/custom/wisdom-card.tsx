@@ -10,32 +10,13 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { getLikedIds, updateLikedIds } from "@/app/lib/utils";
 
 interface Props {
   wisdomId: number;
   totalLikes: number;
   children: React.ReactNode;
   avatarSrc?: string;
-}
-
-const LOCAL_STORAGE_KEY = "catwisdom.liked.wisdoms";
-
-function getLikedIds(): number[] {
-  if (typeof window === "undefined") return [];
-  try {
-    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
-  }
-}
-
-function updateLikedIds(wisdomId: number, liked: boolean) {
-  const current = getLikedIds();
-  const updated = liked
-    ? [...new Set([...current, wisdomId])]
-    : current.filter((id) => id !== wisdomId);
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updated));
 }
 
 export function WisdomCard({
@@ -62,15 +43,14 @@ export function WisdomCard({
       setLikes((prev) => Math.max(prev - newLikes, 0));
 
       // TODO: show error
+      console.log(`Error with liking API: ${error}`);
     }
   };
 
   useEffect(() => {
     const likedIds = getLikedIds();
     setLiked(likedIds.includes(wisdomId));
-    setLikes(totalLikes);
-    console.log(`Fetched wisdom ${wisdomId} with ${totalLikes} likes.`);
-  }, [wisdomId, totalLikes]);
+  }, [wisdomId]);
 
   return (
     <Card className="w-full">
