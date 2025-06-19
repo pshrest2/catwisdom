@@ -89,7 +89,7 @@ export async function getLatestWisdom() {
       w.likes,
       w.created_at,
       c.cat_api_id,
-      c.image_url as url,
+      c.image_url,
       c.created_at as cat_created_at
     FROM wisdom w
     JOIN cats c ON w.cat_id = c.id
