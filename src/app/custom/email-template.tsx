@@ -3,9 +3,10 @@ import * as React from "react";
 type Props = {
   wisdom: string;
   email: string;
+  image_url: string;
 };
 
-export function EmailTemplate({ wisdom, email }: Props) {
+export function EmailTemplate({ wisdom, email, image_url }: Props) {
   return (
     <div
       style={{
@@ -41,6 +42,8 @@ export function EmailTemplate({ wisdom, email }: Props) {
       <p style={{ marginBottom: "32px", fontSize: "16px" }}>
         Have a purrfect day 😽
       </p>
+
+      <img src={image_url} alt="Cat of the day" />
       <footer
         style={{
           fontSize: "14px",

@@ -23,6 +23,7 @@ export async function GET(request: Request) {
         const { data, error } = await sendEmail({
           email: subscriber.email,
           wisdom: wisdom.wisdom,
+          image_url: wisdom.image_url,
         });
         result[subscriber.id] = { data, error };
       })
@@ -34,11 +35,19 @@ export async function GET(request: Request) {
   }
 }
 
-async function sendEmail({ email, wisdom }: { email: string; wisdom: string }) {
+async function sendEmail({
+  email,
+  wisdom,
+  image_url,
+}: {
+  email: string;
+  wisdom: string;
+  image_url: string;
+}) {
   return await resend.emails.send({
     from: "Wise Cat <catwisdom@raspisurveillance.com>",
     to: [email],
     subject: "Meow! Your Daily Wisdom Is Here",
-    react: EmailTemplate({ wisdom, email }),
+    react: EmailTemplate({ wisdom, email, image_url }),
   });
 }

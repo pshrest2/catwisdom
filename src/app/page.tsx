@@ -4,7 +4,7 @@ import { ModeToggle } from "@/app/custom/mode-toggle";
 import { WisdomCard } from "@/app/custom/wisdom-card";
 
 export default async function Home() {
-  const { id, wisdom, likes } = await genWisdom();
+  const { id, wisdom, likes, image_url } = await genWisdom();
   return (
     <div className="flex flex-col items-center mb-4">
       <div className="xs:absolute xs:top-6 xs:right-6">
@@ -15,11 +15,7 @@ export default async function Home() {
           Cat Wisdom 😽
         </div>
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
-        <WisdomCard
-          avatarSrc="/images/wise-cat.png"
-          wisdomId={id}
-          totalLikes={likes}
-        >
+        <WisdomCard avatarSrc={image_url} wisdomId={id} totalLikes={likes}>
           <span className="text-sm font-bold">
             Wisdom of the day -{" "}
             <span className="text-sm italic font-normal">{wisdom}</span>

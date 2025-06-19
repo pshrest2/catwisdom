@@ -3,6 +3,13 @@ import { createWisdom, getLatestWisdom, getWisdoms } from "@/app/lib/actions";
 
 const LLM_MODEL = process.env.LLM_MODEL || "llama-3.3-70b-versatile";
 
+interface CatResult {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}
+
 export async function genWisdom() {
   // Check if we've already generated a wisdom today
   const lastWisdom = await getLatestWisdom();
@@ -18,8 +25,27 @@ export async function genWisdom() {
       id: lastWisdom.id,
       wisdom: lastWisdom.content,
       likes: lastWisdom.likes,
+      image_url: lastWisdom.image_url,
     };
   }
+
+  // Get a new cat
+  const headers = new Headers({
+    "Content-Type": "application/json",
+    "x-api-key": "DEMO-API-KEY",
+  });
+
+  const res = await fetch(
+    "https://api.thecatapi.com/v1/images/search?size=sm&mime_types=jpg&format=json&limit=1",
+    {
+      method: "GET",
+      redirect: "follow",
+      headers: headers,
+    }
+  );
+
+  const cats: CatResult[] = await res.json();
+  const cat = cats[0];
 
   // Retrieve all past wisdom messages to avoid repeating
   const pastWisdoms = await getWisdoms();
@@ -29,13 +55,14 @@ export async function genWisdom() {
 
   // Prepare the first-person cat-centric prompt
   const PROMPT = `
-    I am your wise cat, here to guide you with a short, sweet, philosophical message — something you can carry with you today. 
-    Here are the messages I’ve already shared, so make sure the new one is different:
+    Hey, it's me — your wise, fluffy feline friend. I'm here to drop a little nugget of cat wisdom to help you glide through today with style (and maybe a nap or two).
+
+    Here are the things I've already meowed at you — so don't repeat these:
 
     PAST WISDOMS:
     ${pastList}
 
-    Please share a brief, comforting sentence or two that feels natural, thoughtful, and helpful — just from me, your wise cat.
+    Now give me a new one — something cozy, a little quirky, and totally cat-brained. Just a sentence or two that sounds like it came straight from my purring soul to yours. 😼
   `;
 
   // Generate a new message from the LLM
@@ -52,7 +79,15 @@ export async function genWisdom() {
   }
 
   // Store in the database
-  const result = await createWisdom(message);
+  const result = await createWisdom(message, {
+    id: cat.id,
+    url: cat.url,
+  });
 
-  return { id: result.id, wisdom: message, likes: 0 };
+  return {
+    id: result.id,
+    wisdom: message,
+    likes: 0,
+    image_url: cat.url,
+  };
 }

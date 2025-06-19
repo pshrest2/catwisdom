@@ -13,9 +13,16 @@ interface User extends NumericId {
 }
 
 interface Wisdom extends NumericId {
+  cat_id: number;
   content: string;
   likes: number;
   created_at: Date;
+}
+
+interface WisdomOfCat extends Wisdom {
+  cat_api_id: string;
+  image_url: string;
+  cat_created_at: Date;
 }
 
 const DATABASE_URL = process.env.DATABASE_URL!;
@@ -75,9 +82,19 @@ export async function unsubscribe(
  */
 export async function getLatestWisdom() {
   const sql = postgres(DATABASE_URL);
-  const wisdom = await sql<
-    Wisdom[]
-  >`SELECT * FROM wisdom w ORDER BY w.id DESC LIMIT 1`;
+  const wisdom = await sql<WisdomOfCat[]>`SELECT 
+      w.id,
+      w.cat_id,
+      w.content,
+      w.likes,
+      w.created_at,
+      c.cat_api_id,
+      c.image_url as url,
+      c.created_at as cat_created_at
+    FROM wisdom w
+    JOIN cats c ON w.cat_id = c.id
+    ORDER BY w.id DESC
+    LIMIT 1`;
   return wisdom[0];
 }
 
@@ -89,11 +106,20 @@ export async function getWisdoms() {
   return wisdoms;
 }
 
-export async function createWisdom(content: string) {
+export async function createWisdom(
+  content: string,
+  cat: { id: string; url: string }
+) {
   const sql = postgres(DATABASE_URL);
+
+  const catRes = await sql<
+    NumericId[]
+  >`INSERT INTO cats (cat_api_id, image_url) VALUES (${cat.id}, ${cat.url}) RETURNING id`;
+
   const res = await sql<
     NumericId[]
-  >`INSERT INTO wisdom (content) VALUES (${content}) RETURNING id`;
+  >`INSERT INTO wisdom (cat_id, content) VALUES (${catRes[0].id}, ${content}) RETURNING id`;
+
   return res[0];
 }
 

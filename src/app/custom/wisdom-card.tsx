@@ -22,7 +22,7 @@ interface Props {
 export function WisdomCard({
   wisdomId,
   totalLikes,
-  avatarSrc,
+  avatarSrc = "/images/wise-cat.png",
   children,
 }: Props) {
   const [likes, setLikes] = useState(totalLikes);
@@ -57,7 +57,7 @@ export function WisdomCard({
       {avatarSrc && (
         <CardHeader className="flex items-center">
           <Avatar className="relative size-32 mx-auto">
-            <AvatarImage src="/images/wise-cat.png" className="object-cover" />
+            <AvatarImage src={avatarSrc} className="object-cover" />
             <AvatarFallback>CW</AvatarFallback>
           </Avatar>
         </CardHeader>
