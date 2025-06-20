@@ -11,6 +11,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { getLikedIds, updateLikedIds } from "@/app/lib/utils";
+import { revalidatePath } from "next/cache";
 
 interface Props {
   wisdomId: number;
@@ -44,6 +45,8 @@ export function WisdomCard({
 
       // TODO: show error
       console.log(`Error with liking API: ${error}`);
+    } finally {
+      revalidatePath("/");
     }
   };
 

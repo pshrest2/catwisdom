@@ -1,4 +1,5 @@
 import { Groq } from "groq-sdk";
+import { revalidatePath } from "next/cache";
 import { createWisdom, getLatestWisdom, getWisdoms } from "@/app/lib/actions";
 
 const LLM_MODEL = process.env.LLM_MODEL || "llama-3.3-70b-versatile";
@@ -32,7 +33,6 @@ export async function genWisdom() {
   // Get a new cat
   const headers = new Headers({
     "Content-Type": "application/json",
-    "x-api-key": "DEMO-API-KEY",
   });
 
   const res = await fetch(
@@ -83,6 +83,8 @@ export async function genWisdom() {
     id: cat.id,
     url: cat.url,
   });
+
+  revalidatePath("/");
 
   return {
     id: result.id,

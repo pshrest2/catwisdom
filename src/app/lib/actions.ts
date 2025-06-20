@@ -1,7 +1,6 @@
 "use server";
 
 import postgres from "postgres";
-import { revalidatePath } from "next/cache";
 
 interface NumericId {
   id: number;
@@ -126,11 +125,9 @@ export async function createWisdom(
 export async function likeWisdom(id: number) {
   const sql = postgres(DATABASE_URL);
   await sql`UPDATE wisdom SET likes = likes + 1 WHERE id = ${id}`;
-  revalidatePath("/");
 }
 
 export async function unlikeWisdom(id: number) {
   const sql = postgres(DATABASE_URL);
   await sql`UPDATE wisdom SET likes = GREATEST(likes - 1, 0) WHERE id = ${id}`;
-  revalidatePath("/");
 }
