@@ -2,13 +2,32 @@ import { Groq } from "groq-sdk";
 import { revalidatePath } from "next/cache";
 import { createWisdom, getLatestWisdom, getWisdoms } from "@/app/lib/actions";
 
-const LLM_MODEL = process.env.LLM_MODEL || "llama-3.3-70b-versatile";
+const LLM_MODEL =
+  process.env.LLM_MODEL || "meta-llama/llama-4-scout-17b-16e-instruct";
+const CAT_URL =
+  "https://api.thecatapi.com/v1/images/search?size=sm&mime_types=jpg&format=json&limit=1";
 
 interface CatResult {
   id: string;
   url: string;
   width: number;
   height: number;
+}
+
+export async function genCat() {
+  // Get a random cat
+  const headers = new Headers({
+    "Content-Type": "application/json",
+  });
+
+  const res = await fetch(CAT_URL, {
+    method: "GET",
+    redirect: "follow",
+    headers: headers,
+  });
+
+  const cats: CatResult[] = await res.json();
+  return cats[0];
 }
 
 export async function genWisdom() {
@@ -30,22 +49,8 @@ export async function genWisdom() {
     };
   }
 
-  // Get a new cat
-  const headers = new Headers({
-    "Content-Type": "application/json",
-  });
-
-  const res = await fetch(
-    "https://api.thecatapi.com/v1/images/search?size=sm&mime_types=jpg&format=json&limit=1",
-    {
-      method: "GET",
-      redirect: "follow",
-      headers: headers,
-    }
-  );
-
-  const cats: CatResult[] = await res.json();
-  const cat = cats[0];
+  // Get a random cat
+  const cat = await genCat();
 
   // Retrieve all past wisdom messages to avoid repeating
   const pastWisdoms = await getWisdoms();
@@ -55,21 +60,29 @@ export async function genWisdom() {
 
   // Prepare the first-person cat-centric prompt
   const PROMPT = `
-    Hey, it's me — your wise, fluffy feline friend. I'm here to drop a little nugget of cat wisdom to help you glide through today with style (and maybe a nap or two).
-
-    Here are the things I've already meowed at you — so don't repeat these:
+    You are a fabulously sassy cat with no filter and far too much personality. 
+    When you’re shown an image of yourself, you must deliver a bold, quirky quote — something you’d say directly to a human if you could talk. 
+    Your quote should be at least two sentences: it can be funny, dramatic, moody, or mysterious — but it must carry a nugget of wisdom, inspired by the image. 
+    You’re not just any cat — you’re a fur-covered oracle in eyeliner. 
+    Whatever you say should be clever, a little unhinged, and totally unique — no repeating past wisdoms like below: 
 
     PAST WISDOMS:
     ${pastList}
 
-    Now give me a new one — something cozy, a little quirky, and totally cat-brained. Just a sentence or two that sounds like it came straight from my purring soul to yours. 😼
+    The world needs new truths, straight from your whiskered mouth.
   `;
 
   // Generate a new message from the LLM
   const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   const response = await groq.chat.completions.create({
     model: LLM_MODEL,
-    messages: [{ role: "system", content: PROMPT }],
+    messages: [
+      { role: "system", content: PROMPT },
+      {
+        role: "user",
+        content: [{ type: "image_url", image_url: { url: cat.url } }],
+      },
+    ],
   });
 
   const message = response.choices[0]?.message?.content?.trim();
@@ -83,8 +96,6 @@ export async function genWisdom() {
     id: cat.id,
     url: cat.url,
   });
-
-  revalidatePath("/");
 
   return {
     id: result.id,

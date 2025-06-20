@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { revalidatePath } from "next/cache";
 import { EmailTemplate } from "@/app/custom/email-template";
 import { getSubscribers } from "@/app/lib/actions";
 import { genWisdom } from "@/app/lib/wisdom";
@@ -28,6 +29,7 @@ export async function GET(request: Request) {
         result[subscriber.id] = { data, error };
       })
     );
+    revalidatePath("/");
     // TODO: add retry here if failed to send email
     return Response.json({ result });
   } catch (error) {

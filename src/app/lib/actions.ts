@@ -112,13 +112,18 @@ export async function createWisdom(
 ) {
   const sql = postgres(DATABASE_URL);
 
-  const catRes = await sql<
-    NumericId[]
-  >`INSERT INTO cats (cat_api_id, image_url) VALUES (${cat.id}, ${cat.url}) RETURNING id`;
+  const catRes = await sql<NumericId[]>`
+    INSERT INTO cats (cat_api_id, image_url)
+    VALUES (${cat.id}, ${cat.url})
+    ON CONFLICT (cat_api_id) DO NOTHING
+    RETURNING id
+  `;
 
-  const res = await sql<
-    NumericId[]
-  >`INSERT INTO wisdom (cat_id, content) VALUES (${catRes[0].id}, ${content}) RETURNING id`;
+  const res = await sql<NumericId[]>`
+    INSERT INTO wisdom (cat_id, content) 
+    VALUES (${catRes[0].id}, ${content}) 
+    RETURNING id
+  `;
 
   return res[0];
 }
