@@ -15,7 +15,7 @@ import { getLikedIds, updateLikedIds } from "@/app/lib/utils";
 interface Props {
   wisdomId: number;
   totalLikes: number;
-  children: React.ReactNode;
+  wisdom: string;
   avatarSrc?: string;
 }
 
@@ -23,10 +23,11 @@ export function WisdomCard({
   wisdomId,
   totalLikes,
   avatarSrc = "/images/wise-cat.png",
-  children,
+  wisdom,
 }: Props) {
   const [likes, setLikes] = useState(totalLikes);
   const [liked, setLiked] = useState(false);
+  const [shouldShowToggle, setShouldShowToggle] = useState(false);
 
   const handleLikeWisdom = async (liked: boolean) => {
     const newLikes = liked ? 1 : -1;
@@ -50,19 +51,36 @@ export function WisdomCard({
   useEffect(() => {
     const likedIds = getLikedIds();
     setLiked(likedIds.includes(wisdomId));
+    if (wisdom.length > 100) {
+      setShouldShowToggle(true);
+    }
   }, [wisdomId]);
 
   return (
     <Card className="w-full">
       {avatarSrc && (
         <CardHeader className="flex items-center">
-          <Avatar className="relative size-32 mx-auto">
+          <Avatar>
             <AvatarImage src={avatarSrc} className="object-cover" />
             <AvatarFallback>CW</AvatarFallback>
           </Avatar>
+          <span className="font-bold text-sm mx-2">bellyrubs</span>
         </CardHeader>
       )}
-      <CardContent className="text-center">{children}</CardContent>
+      <img src={avatarSrc} />
+      <CardContent className="text-sm">
+        <span className={`${shouldShowToggle && "line-clamp-3"}`}>
+          {wisdom}
+        </span>
+        {shouldShowToggle && (
+          <button
+            onClick={() => setShouldShowToggle(false)}
+            className="cursor-pointer text-foreground opacity-60"
+          >
+            more
+          </button>
+        )}
+      </CardContent>
       <CardFooter>
         <LikeButton likes={likes} value={liked} onClick={handleLikeWisdom} />
       </CardFooter>

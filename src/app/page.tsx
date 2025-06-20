@@ -6,7 +6,7 @@ import { WisdomCard } from "@/app/custom/wisdom-card";
 export default async function Home() {
   const { id, wisdom, likes, image_url } = await genLatestWisdom();
   return (
-    <div className="flex flex-col items-center mb-4">
+    <div className="flex flex-col items-center mb-4 gap-4">
       <div className="xs:absolute xs:top-6 xs:right-6">
         <ModeToggle />
       </div>
@@ -15,12 +15,12 @@ export default async function Home() {
           Cat Wisdom 😽
         </div>
         <div className="sm:text-2xl">Daily doses of feline philosophy</div>
-        <WisdomCard avatarSrc={image_url} wisdomId={id} totalLikes={likes}>
-          <span className="text-sm font-bold">
-            Wisdom of the day -{" "}
-            <span className="text-sm italic font-normal">{wisdom}</span>
-          </span>
-        </WisdomCard>
+        <WisdomCard
+          avatarSrc={image_url}
+          wisdomId={id}
+          totalLikes={likes}
+          wisdom={wisdom}
+        />
         <SubscriptionForm mode="subscribe" />
       </main>
     </div>
