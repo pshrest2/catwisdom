@@ -43,7 +43,7 @@ export async function genLatestWisdom() {
   ) {
     return {
       id: lastWisdom.id,
-      wisdom: lastWisdom.content,
+      wisdom: lastWisdom.content.replace(/['"]+/g, ''),
       likes: lastWisdom.likes,
       image_url: lastWisdom.image_url,
     };
