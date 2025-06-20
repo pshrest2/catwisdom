@@ -30,7 +30,7 @@ export async function genCat() {
   return cats[0];
 }
 
-export async function genWisdom() {
+export async function genLatestWisdom() {
   // Check if we've already generated a wisdom today
   const lastWisdom = await getLatestWisdom();
   const today = new Date();
@@ -48,7 +48,10 @@ export async function genWisdom() {
       image_url: lastWisdom.image_url,
     };
   }
+  return await genWisdom();
+}
 
+export async function genWisdom() {
   // Get a random cat
   const cat = await genCat();
 

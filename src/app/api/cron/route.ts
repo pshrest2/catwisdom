@@ -15,23 +15,30 @@ export async function GET(request: Request) {
       });
     }
 
+    const { searchParams } = new URL(request.url);
+    const shouldSendEmail = searchParams.get("sendEmail") !== "false";
+
     const wisdom = await genWisdom();
     const subscribers = await getSubscribers();
 
     const result: Record<number, { data: any; error: any }> = {};
-    await Promise.all(
-      subscribers.map(async (subscriber) => {
-        const { data, error } = await sendEmail({
-          email: subscriber.email,
-          wisdom: wisdom.wisdom,
-          image_url: wisdom.image_url,
-        });
-        result[subscriber.id] = { data, error };
-      })
-    );
+
+    if (shouldSendEmail) {
+      await Promise.all(
+        subscribers.map(async (subscriber) => {
+          const { data, error } = await sendEmail({
+            email: subscriber.email,
+            wisdom: wisdom.wisdom,
+            image_url: wisdom.image_url,
+          });
+          result[subscriber.id] = { data, error };
+        })
+      );
+    }
+
     revalidatePath("/");
     // TODO: add retry here if failed to send email
-    return Response.json({ result });
+    return Response.json({ result, emailSent: shouldSendEmail });
   } catch (error) {
     return Response.json({ error }, { status: 500 });
   }
