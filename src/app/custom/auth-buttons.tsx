@@ -40,7 +40,10 @@ export async function AuthButtons() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuItem>
-          <Link href="/api/signout" className="w-full flex items-center gap-2">
+          <Link
+            href="/api/auth/signout"
+            className="w-full flex items-center gap-2"
+          >
             <LogOut /> Logout
           </Link>
         </DropdownMenuItem>
