@@ -1,5 +1,4 @@
 import { Groq } from "groq-sdk";
-import { revalidatePath } from "next/cache";
 import { createWisdom, getLatestWisdom, getWisdoms } from "@/app/lib/actions";
 
 const LLM_MODEL =
@@ -43,7 +42,7 @@ export async function genLatestWisdom() {
   ) {
     return {
       id: lastWisdom.id,
-      wisdom: lastWisdom.content.replace(/['"]+/g, ''),
+      wisdom: lastWisdom.content.replace(/['"]+/g, ""),
       likes: lastWisdom.likes,
       image_url: lastWisdom.image_url,
     };

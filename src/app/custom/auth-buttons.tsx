@@ -1,5 +1,5 @@
 import { LogOut, LogIn } from "lucide-react";
-import { auth, signIn, signOut } from "@/app/lib/auth";
+import { auth, signIn } from "@/auth";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,

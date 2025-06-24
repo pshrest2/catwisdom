@@ -1,7 +1,11 @@
+import { auth } from "@/auth";
 import { put } from "@vercel/blob";
+import { NextAuthRequest } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request): Promise<NextResponse> {
+export const POST = auth(async function POST(
+  request: Request
+): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   if (!request.body) {
     return NextResponse.json(
@@ -18,4 +22,9 @@ export async function POST(request: Request): Promise<NextResponse> {
   });
 
   return NextResponse.json(blob);
-}
+});
+
+export const GET = auth(async function GET(req: NextAuthRequest) {
+  if (req.auth) return NextResponse.json({ auth: req.auth });
+  return NextResponse.json({ message: "Not Authenticated" }, { status: 401 });
+});
