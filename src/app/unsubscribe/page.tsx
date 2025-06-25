@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SubscriptionForm } from "@/app/custom/subscribe";
+import { Header } from "@/app/custom/header";
 
 interface SearchParams {
   email?: string;
@@ -14,6 +15,7 @@ export default async function Unsubscribe({
 
   return (
     <div className="flex flex-col items-center">
+      <Header />
       <Link
         href="/"
         className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"

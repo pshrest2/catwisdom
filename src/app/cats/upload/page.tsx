@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { PutBlobResult } from "@vercel/blob";
 import { Header } from "@/app/custom/header";
 
@@ -17,12 +18,20 @@ export default function CatUploadPage() {
     setBlob(newBlob);
   };
   return (
-    <div className="flex flex-col items-center mb-4 gap-4">
+    <div className="flex flex-col items-center">
       <Header />
-      <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
-        Upload a cat 🐈
-      </div>
-      <span className="font-bold">Coming Soon...</span>
+      <Link
+        href="/"
+        className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+      >
+        ← Home
+      </Link>
+      <main className="flex flex-col gap-4 items-center sm:max-w-xl">
+        <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
+          Upload a cat 🐈
+        </div>
+        <div className="sm:text-2xl">Coming Soon...</div>
+      </main>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
+import { LogOut, LogIn, Cat } from "lucide-react";
 import { useSession, signIn, signOut } from "next-auth/react";
-import { LogOut, LogIn } from "lucide-react";
+import Link from "next/link";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -37,6 +38,14 @@ export function AuthButtons() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
+        <DropdownMenuItem
+          className="w-full flex items-center gap-2 cursor-pointer"
+          asChild
+        >
+          <Link href="/cats/upload" className="w-full flex items-center gap-2">
+            <Cat /> Contribute
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => signOut()}
           className="w-full flex items-center gap-2 cursor-pointer"
