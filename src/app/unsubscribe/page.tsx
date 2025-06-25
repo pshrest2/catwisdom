@@ -14,14 +14,8 @@ export default async function Unsubscribe({
   const { email } = await searchParams;
 
   return (
-    <div className="flex flex-col items-center">
-      <Header />
-      <Link
-        href="/"
-        className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-      >
-        ← Changed your mind? Go back home
-      </Link>
+    <div className="flex flex-col items-center mb-4 gap-4">
+      <Header backToHref="/" backToLabel="Home" />
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
           Don't Leave 😿

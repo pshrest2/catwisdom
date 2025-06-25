@@ -18,14 +18,8 @@ export default function CatUploadPage() {
     setBlob(newBlob);
   };
   return (
-    <div className="flex flex-col items-center">
-      <Header />
-      <Link
-        href="/"
-        className="text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
-      >
-        ← Home
-      </Link>
+    <div className="flex flex-col items-center mb-4 gap-4">
+      <Header backToHref="/" backToLabel="Home" />
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
           Upload a cat 🐈
