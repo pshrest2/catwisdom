@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Geist, Geist_Mono } from "next/font/google";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -40,7 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="flex-grow">
-            {children}
+            <SessionProvider>{children}</SessionProvider>
             <SpeedInsights />
           </main>
         </ThemeProvider>

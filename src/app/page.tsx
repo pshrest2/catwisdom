@@ -1,20 +1,14 @@
 import { genLatestWisdom } from "@/app/lib/wisdom";
 import { SubscriptionForm } from "@/app/custom/subscribe";
-import { ModeToggle } from "@/app/custom/mode-toggle";
 import { WisdomCard } from "@/app/custom/wisdom-card";
-import { AuthButtons } from "@/app/custom/auth-buttons";
+import { Header } from "@/app/custom/header";
 
 export default async function Home() {
   const { id, wisdom, likes, image_url } = await genLatestWisdom();
 
   return (
     <div className="flex flex-col items-center mb-4 gap-4">
-      <div className="flex flex-row-reverse sm:w-full">
-        <div className="flex gap-3">
-          <AuthButtons />
-          <ModeToggle />
-        </div>
-      </div>
+      <Header />
       <main className="flex flex-col gap-4 items-center sm:max-w-xl">
         <div className="text-4xl xs:text-5xl sm:text-6xl font-bold">
           Cat Wisdom 😽

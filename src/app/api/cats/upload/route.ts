@@ -19,6 +19,7 @@ export const POST = auth(async function POST(
 
   const blob = await put(filename, request.body, {
     access: "public",
+    addRandomSuffix: true,
   });
 
   return NextResponse.json(blob);

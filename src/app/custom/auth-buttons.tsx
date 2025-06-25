@@ -1,5 +1,7 @@
+"use client";
+
+import { useSession, signIn, signOut } from "next-auth/react";
 import { LogOut, LogIn } from "lucide-react";
-import { auth, signIn } from "@/auth";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -8,24 +10,20 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
-export async function AuthButtons() {
-  const session = await auth();
+export function AuthButtons() {
+  const { data: session } = useSession();
   const avatarSrc = session?.user?.image ?? "https://www.gravatar.com/avatar";
 
   if (!session) {
     return (
-      <form
-        action={async () => {
-          "use server";
-          await signIn();
-        }}
+      <Button
+        onClick={() => signIn()}
+        size="icon"
+        className="flex items-center gap-2"
       >
-        <Button type="submit" size="icon">
-          <LogIn />
-        </Button>
-      </form>
+        <LogIn />
+      </Button>
     );
   }
 
@@ -39,13 +37,11 @@ export async function AuthButtons() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem>
-          <Link
-            href="/api/auth/signout"
-            className="w-full flex items-center gap-2"
-          >
-            <LogOut /> Logout
-          </Link>
+        <DropdownMenuItem
+          onClick={() => signOut()}
+          className="w-full flex items-center gap-2 cursor-pointer"
+        >
+          <LogOut /> Logout
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
