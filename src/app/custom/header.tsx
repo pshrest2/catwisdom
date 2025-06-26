@@ -11,7 +11,7 @@ interface Props {
 
 export function Header({ backToHref, backToLabel }: Props) {
   return (
-    <div className="flex flex-row-reverse w-full lg:w-1/2 justify-between items-center">
+    <div className="flex flex-row-reverse w-full lg:w-1/2 justify-between items-center mb-8">
       <div className="flex gap-3">
         <AuthButtons />
         <ModeToggle />
