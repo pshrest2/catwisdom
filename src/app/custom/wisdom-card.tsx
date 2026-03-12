@@ -59,15 +59,13 @@ export function WisdomCard({
   return (
     <Card className="w-full">
       {avatarSrc && (
-        <CardHeader className="flex items-center">
-          <Avatar>
+        <CardHeader className="flex justify-center">
+          <Avatar className="w-40 h-40">
             <AvatarImage src={avatarSrc} className="object-cover" />
             <AvatarFallback>CW</AvatarFallback>
           </Avatar>
-          <span className="font-bold text-sm mx-2">bellyrubs</span>
         </CardHeader>
       )}
-      <img src={avatarSrc} />
       <CardContent className="text-sm">
         <span className={`${shouldShowToggle && "line-clamp-3"}`}>
           {wisdom}
